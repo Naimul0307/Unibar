@@ -7,15 +7,15 @@ Dashboard-Add-Category
 
 <div class="container">
 <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span> All Category </h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Page/</span> Add Category </h4>
 <div class="col-xxl">
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="mb-0">Add Category</h5>
+                      <h5 class="mb-0">Add New Category</h5>
                       <small class="text-muted float-end">Add Category Name</small>
                     </div>
                     <div class="card-body">
-                      <form action="" method="Post">
+                      <form action="" method="POST">
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Category Name</label>
                           <div class="col-sm-10">
@@ -25,10 +25,7 @@ Dashboard-Add-Category
                                 class="form-control"
                                 id="category_name"
                                 name="category_name"
-                                placeholder="Enter Category Name"
-                                aria-label="John Doe"
-                                aria-describedby="basic-icon-default-fullname2"
-                              />
+                                placeholder="Enter Category Name"/>
                             </div>
                           </div>
                         </div>
