@@ -9,6 +9,11 @@ Dashboard-All-Category
 <div class="card">
                 <h5 class="card-header">All Category Information</h5>
                 <div class="table-responsive text-nowrap">
+                  @if(session()->has('message'))
+                  <div class="alert alert-success">
+                    {{session()->get('message')}}
+                  </div>
+                  @endif
                   <table class="table table-dark">
                     <thead>
                       <tr>
