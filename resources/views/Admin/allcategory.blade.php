@@ -21,20 +21,24 @@ Dashboard-All-Category
                         <th>Category Name</th>
                         <th>Sub Category Count</th>
                         <th>Product Count</th>
+                        <th>Slug</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                      @foreach($categories as $category)
                       <tr>
-                        <td>Jon</td>
-                        <td>Jon</td>
-                        <td>Jon</td>
-                        <td>Jon</td>
+                        <td>{{$category->id}}</td>
+                        <td>{{$category->category_name}}</td>
+                        <td>{{$category->subcategory_count}}</td>
+                        <td>{{$category->product_count}}</td>
+                        <td>{{$category->slug}}</td>
                         <td>
-                              <a class="btn btn-primary" href=""><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                              <a class="btn btn-danger" href=""><i class="bx bx-trash me-1"></i> Delete</a>
+                              <a class="btn btn-primary" href="{{route('editcategory', $category->id)}}"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                              <a class="btn btn-danger" href="{{route('deletecategory',$category->id)}}"><i class="bx bx-trash me-1"></i> Delete</a>
                         </td>
                       </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>

@@ -37,34 +37,36 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/admin/dashboard','Index')->name('admindashboard');
     });
-});
 
-Route::middleware('auth','role:admin')->group(function () {
     Route::controller(CategoryController::class)->group(function(){
         Route::get('/admin/all-category','Index')->name('allcategory');
         Route::get('/admin/add-category','AddCategory')->name('addcategory');
-        ROute::post('/admin/store-category', 'StoreCategory')->name('storecategory');
+        Route::post('/admin/store-category', 'StoreCategory')->name('storecategory');
+        Route::get('/admin/edit-category/{id}','EditCategory')->name('editcategory');
+        Route::post('/admin/update-category', 'UpdateCategory')->name('updatecategory');
+        Route::get('/admin/delete-category/{id}','DeleteCategory')->name('deletecategory');
     });
-});
 
-Route::middleware('auth','role:admin')->group(function () {
     Route::controller(SubCategoryController::class)->group(function(){
         Route::get('/admin/all-subcategory','Index')->name('allsubcategory');
         Route::get('/admin/add-subcategory','AddSubCategory')->name('addsubcategory');
+        Route::post('/admin/store-subcategory', 'StoreSubCategory')->name('storesubcategory');
+        Route::get('/admin/edit-subcategory/{id}', 'EditSubCategory')->name('editsubcategory');
+        Route::post('/admin/update-subcategory', 'UpdateSubCategory')->name('updatesubcategory');
+        Route::get('/admin/delete-subcategory/{id}', 'DeleteSubCategory')->name('deleteubcategory');
     });
-});
-Route::middleware('auth','role:admin')->group(function () {
+
     Route::controller(ProductController::class)->group(function(){
         Route::get('/admin/all-product','Index')->name('allproduct');
         Route::get('/admin/add-product','AllProduct')->name('addproduct');
     });
-});
-Route::middleware('auth','role:admin')->group(function () {
+
     Route::controller(OrderController::class)->group(function(){
         Route::get('/admin/all-order','Index')->name('allorder');
-        Route::get('/admin/pendingorder','PendingOrder')->name('pendingorder');
-        Route::get('/admin/completeorder','CompleteOrder')->name('completeorder');
-        Route::get('/admin/canceledorder','CanceledOrder')->name('canceledorder');
+        Route::get('/admin/pending-order','PendingOrder')->name('pendingorder');
+        Route::get('/admin/complete-order','CompleteOrder')->name('completeorder');
+        Route::get('/admin/canceled-order','CanceledOrder')->name('canceledorder');
     });
 });
+
 require __DIR__.'/auth.php';

@@ -14,7 +14,19 @@ Dashboard-Add-SubCategory
                       <small class="text-muted float-end">Add Sub Category Name</small>
                     </div>
                     <div class="card-body">
-                      <form action="" method="POST">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                         <ul>
+                         @foreach ($errors->all() as $error)
+                         <li>
+                           {{ $error }}
+                         </li>
+                         @endforeach
+                       </ul>
+                     </div>
+                     @endif
+                      <form action="{{route('storesubcategory')}}" method="POST">
+                        @csrf
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="">Sub Category Name</label>
                           <div class="col-sm-10">
@@ -32,11 +44,11 @@ Dashboard-Add-SubCategory
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label">Category Name Select</label>
                         <div class="col-sm-10">
-                        <select id="defaultSelect" class="form-select">
+                        <select class="form-select" name="category_id" id="category_id">
                           <option>Select Category Name</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          @foreach ($categories as $category )
+                          <option value="{{$category->id}}">{{$category->category_name}}</option>
+                          @endforeach
                         </select>
                       </div>
                     </div>

@@ -9,6 +9,11 @@ Dashboard-All-SubCategory
 <div class="card">
                 <h5 class="card-header">All Sub Category Information</h5>
                 <div class="table-responsive text-nowrap">
+                    @if(session()->has('message'))
+                    <div class="alert alert-success">
+                      {{session()->get('message')}}
+                    </div>
+                    @endif
                   <table class="table table-dark">
                     <thead>
                       <tr>
@@ -20,16 +25,18 @@ Dashboard-All-SubCategory
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+                        @foreach ( $allsubcategories as $subcategory)
                       <tr>
-                        <td>1</td>
-                        <td>Jon</td>
-                        <td>4</td>
-                        <td>3</td>
+                        <td>{{$subcategory->id}}</td>
+                        <td>{{$subcategory->subcategory_name}}</td>
+                        <td>{{$subcategory->category_name}}</td>
+                        <td>{{$subcategory->product_count}}</td>
                         <td>
-                              <a class="btn btn-primary" href=""><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                              <a class="btn btn-danger" href=""><i class="bx bx-trash me-1"></i> Delete</a>
+                              <a class="btn btn-primary" href="{{route('editsubcategory', $subcategory->id)}}"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                              <a class="btn btn-danger" href="{{route('deleteubcategory', $subcategory->id)}}"><i class="bx bx-trash me-1"></i> Delete</a>
                         </td>
                       </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>
