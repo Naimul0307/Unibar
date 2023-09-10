@@ -32,7 +32,7 @@ class ProductController extends Controller
             'product_long_des' => 'required',
             'product_category_id' => 'required',
             'product_subcategory_id' => 'required',
-            'product_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg,web|max:2048',
+            'product_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $image = $request->file('product_img');
@@ -62,6 +62,74 @@ class ProductController extends Controller
         Category::where('id',$category_id)->increment('product_count',1);
         Subcategory::where('id',$subcategory_id)->increment('product_count',1);
 
-        return redirect() -> route('allsubcategory') ->with('message','Product Add Successfully!');
+        return redirect() -> route('allproduct') ->with('message','Product Add Successfully!');
+    }
+
+    public function EditProduct($id)
+    {
+        $product_info = Product::findOrFail($id);
+
+        return view('admin.editproduct' , compact('product_info'));
+    }
+
+    public function EditProductImg($id)
+    {
+        $product_info = Product::findOrFail($id);
+
+        return view('admin.editproductimg' , compact('product_info'));
+    }
+
+    public function UpdateProduct(Request $request)
+    {
+
+        $prodcut_id = $request->id;
+        $request->validate([
+            'product_name' => 'required|unique:products',
+            'price' => 'required',
+            'quantity' => 'required',
+            'product_short_des' => 'required',
+            'product_long_des' => 'required',
+
+        ]);
+
+        Product::findOrFail($prodcut_id)->update([
+            'product_name' => $request -> product_name,
+            'price' => $request -> price,
+            'quantity' => $request -> quantity,
+            'product_short_des'=> $request -> product_short_des,
+            'product_long_des'=> $request -> product_long_des,
+            'slug' => strtolower(str_replace(' ','-',$request->product_name	)),
+        ]);
+
+        return redirect() -> route('allproduct') ->with('message','Product Information Update Successfully!');
+    }
+
+    public function UpdateProductImg(Request $request)
+    {
+        $request->validate([
+            'product_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+        ]);
+
+        $id = $request->id;
+        $image = $request->file('product_img');
+        $img_name = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        $request->product_img->move(public_path('upload'),$img_name);
+        $img_url = 'upload/' . $img_name;
+
+        Product::findOrFail($id)->update([
+            'product_img'=> $img_url,
+        ]);
+
+        return redirect() -> route('allproduct') ->with('message','Product Image Update Successfully!');
+    }
+
+    public function DeleteProduct($id)
+    {
+        $cat_id = Product::where('id',$id)->value('product_category_id');
+        $subcat_id = Product::where('id',$id)->value('product_subcategory_id');
+        Product::findOrFail($id)->delete();
+        Category::where('id',$cat_id)->decrement('product_count',1);
+        subcategory::where('id',$subcat_id)->decrement('product_count',1);
+        return redirect() -> route('allproduct') ->with('message','Product Delete Successfully!');
     }
 }

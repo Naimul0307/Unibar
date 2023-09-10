@@ -33,10 +33,15 @@ Dashboard-All-Product
                             <td>{{$product->product_name}}</td>
                             <td>{{$product->product_category_name}}</td>
                             <td>{{$product->product_subcategory_name}}</td>
-                            <td>{{$product->product_img}}</td>
                             <td>
-                                  <a class="btn btn-primary" href=""><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                  <a class="btn btn-danger" href=""><i class="bx bx-trash me-1"></i> Delete</a>
+                            <img style="height:80px" src="{{asset($product->product_img)}}" alt="">
+                            <br/>
+                            <br/>
+                            <a class="btn btn-primary" href="{{route('editproductimg', $product->id)}}"><i class="bx bx-edit-alt me-1"></i>Update Image</a>
+                        </td>
+                            <td>
+                                  <a class="btn btn-primary" href="{{route('editproduct', $product->id)}}"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                  <a class="btn btn-danger" href="{{route('deleteproduct', $product->id)}}"><i class="bx bx-trash me-1"></i> Delete</a>
                             </td>
                           </tr>
                         @endforeach
