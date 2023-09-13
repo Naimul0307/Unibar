@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
@@ -18,9 +20,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(HomeController::class)->group(function(){
+    Route::get('/','Index')->name('Home');
 });
 
 Route::get('/dashboard', function () {
@@ -33,7 +34,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::controller(UserController::class)->group(function(){
+    Route::get('/category/{id}/{slug}','CategoryPage')->name('category');
+});
+
 Route::middleware('auth','role:admin')->group(function () {
+
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/admin/dashboard','Index')->name('admindashboard');
     });
