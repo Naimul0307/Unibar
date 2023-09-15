@@ -24,9 +24,13 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/','Index')->name('Home');
 });
 
+/* Route::get('/welcome', function () {
+    return view('welcome');
+}); */
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'role:user'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,10 +40,23 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(UserController::class)->group(function(){
     Route::get('/category/{id}/{slug}','CategoryPage')->name('category');
+    Route::get('/product-details/{id}/{slug}','SingleProduct')->name('singleproduct');
+    Route::get('/best-sellers','BestSellers')->name('bestsellers');
 });
 
-Route::middleware('auth','role:admin')->group(function () {
+Route::middleware(['auth','role:user'])->group(function () {
+    Route::controller(UserController::class)->group(function(){
+        Route::get('/gift-ideas','GiftIdeas')->name('giftideas');
+        Route::get('/user-pofile','UserProfile')->name('userprofile');
+        Route::get('/add-to-cart','AddToCart')->name('addtocart');
+        Route::get('/checkout','Checkout')->name('checkout');
+        Route::get('/todays-deal','TodaysDeal')->name('todaysdeal');
+        Route::get('/custom-service','CustomerService')->name('customerservice');
+        Route::get('/new-releases','NewReleases')->name('newreleases');
+    });
+});
 
+Route::middleware(['auth','role:admin'])->group(function () {
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/admin/dashboard','Index')->name('admindashboard');
     });
